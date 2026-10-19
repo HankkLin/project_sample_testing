@@ -1,0 +1,24 @@
+# Local environments and secrets
+.venv/
+venv/
+.env
+.env.*
+
+# Python and notebook caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+[Dd]esktop.ini
+
+# Local validation outputs (keep submission CSVs and trained models)
+model_training/static_prices_validation.csv
+model_training/bonus_fairness_validation.csv
