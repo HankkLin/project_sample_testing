@@ -51,18 +51,6 @@ After cloning on another computer:
 
 Code and documentation use paths relative to the repository. Run notebook setup from this project folder, follow each notebook's path initialization, and keep fitted preprocessing with its model. Runtime agents must not depend on local course PDFs, a personal filesystem path, or internet access.
 
-### Part 1 Step 1 workflow
-
-Read the [Step 1 plan](docs/part1-step1-plan.md), then inspect `data/data_helpers_2026.ipynb` and `model_training/purchase_model_baseline.ipynb`. The current setup is documentation and planning only: no new algorithm has been implemented, no model has been trained, and no new performance result is claimed.
-
-When beginning implementation, a scoped coding-assistant request can be:
-
-> Read AGENTS.md, the course reference, and the Part 1 Step 1 plan. Inspect the current training notebook and permitted purchase-decision data. Implement only demand estimation and held-out probability evaluation; keep preprocessing and feature construction in model_training/ and required model artifacts in agents/helper_files_here/. Explain checks and findings so the team can review the code. Leave static pricing, capacity pricing, competition, and the Project Report outside this task.
-
-Reproduce the supplied clipped linear-regression baseline before comparing a class-grounded logistic model using offered price and customer covariates. Evaluate purchase probabilities on held-out purchase-decision data. Brier score, log loss, calibration diagnostics, and reproducible splits are recommendations in the plan, not mandated model choices. Never learn from hidden valuations or simulator internals. A classifier needs purchase-class probabilities from `predict_proba`, rather than the class labels from `predict`; coordinate that contract with later agent consumers.
-
-Step 2 generates static prices and its submission CSV. Step 3 implements inventory-constrained decisions. Those steps, Part 2 competition, and the fairness bonus remain separate from Step 1. Use only approved dependencies and the assignment's runtime constraints when implementing them.
-
 ### Team collaboration and eventual migration
 
 This public working fork supports preparation while the Classroom50 group repository is pending. The starter instruction to use one repository for all parts applies to the eventual shared team submission repository; this fork is not automatically that destination.
