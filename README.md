@@ -57,6 +57,8 @@ Code and documentation use paths relative to the repository. Run notebook setup 
 - [Implementation plan](docs/part1-step1-plan.md)
 - [Baseline experiment](model_training/baseline-experiment.md) and [structured results](model_training/baseline-results.json)
 - [Saved baseline model](agents/helper_files_here/purchase_model.pkl)
+- [Logistic comparison](model_training/logistic-experiment.md), [results](model_training/logistic-comparison-results.json), and [training script](model_training/compare_logistic.py)
+- [Held-out predictions](model_training/logistic-heldout-predictions.csv), [calibration](model_training/logistic-calibration.csv), and [selected logistic model](agents/helper_files_here/purchase_model_logistic.pkl)
 
 ### Team collaboration and eventual migration
 
