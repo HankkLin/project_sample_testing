@@ -1,0 +1,33 @@
+# Part 1 Step 1: demand estimation implementation plan
+
+Development planning only. This document is not Project Report content and must not be used as an AI-written contribution to that report.
+
+## Required outcome
+
+The [assignment snapshot, p. 3](assignment/project-instructions.pdf#page=3) requires a purchase-probability model trained from `data/train_prices_decisions_2026.csv` using offered price and customer covariates. Begin with `model_training/purchase_model_baseline.ipynb` and inspect `data/data_helpers_2026.ipynb`; adapting HW3 is permitted. Commit training code, preprocessing, and feature construction in `model_training/`; save the model in `agents/helper_files_here/`. Evaluate on held-out purchase decisions. Step 1 has no separate numerical turn-in score.
+
+Do not implement static-price generation, a submission CSV, capacity pricing, competition, or fairness here. Those are later steps. Only supplied offers/purchase decisions and permitted simulator feedback may be used for learning; do not train on validation valuations, hidden simulator targets, or test-customer outcomes.
+
+## Verified starting point
+
+The inspected starter uses `Covariate1`, `Covariate2`, `Covariate3`, and `price_item` as features, with Boolean `item_bought` as the target. `user_index` is an identifier, not a predictor. The data helper describes 50,000 training customers and a binary first covariate; check the actual CSV rather than relying solely on that description.
+
+The baseline fits `LinearRegression`, uses a 20% split with `random_state=0`, clips predictions to [0, 1], reports held-out MSE, and saves `agents/helper_files_here/purchase_model.pkl` with a save/reload agreement check. The current `agents/agent_part1.py` calls `trained_model.predict(features)` and clips it. Both Part 1 and Part 2 are intended to load the shared model. These are starter choices, not assignment-mandated model or split choices. The 0–500 grid in the starter is not a verified legal price bound.
+
+## Recommended work sequence
+
+1. **Audit and reproduce.** Record column types, row count, label balance, missing/nonfinite values, duplicate identifiers, and price/covariate ranges from the permitted training CSV. Confirm Boolean labels map to 0/1 without treating nonempty strings as true. Reproduce the supplied linear baseline on its original split before changing it; record actual results, not expected scores.
+2. **Fix a comparison protocol.** Prefer a reproducible stratified train/validation/final-holdout split of the purchase-decision rows, provided both labels have sufficient examples. Use training data only to fit preprocessing; use validation data to choose regularization/features; inspect the untouched final holdout once after selection. Keep split seeds/IDs fixed across candidate models. This three-way protocol is our recommendation; the assignment requires held-out evaluation, not these exact partitions. Do not compare scores across different splits as if directly comparable.
+3. **Build a class-grounded logistic comparator.** Start with `Pr(item_bought=1 | price_item, Covariate1, Covariate2, Covariate3)` using the approved scikit-learn stack. Fit standardization and logistic regression in one pipeline so preprocessing travels with the model. Then test a small, controlled set of price–covariate interactions as suggested by Lecture 7 p. 26. Add complexity only if validation improves. Document feature ordering and formulas; do not assume an interaction model is monotone in price.
+4. **Check probability quality.** Compare the clipped linear baseline and logistic candidates on the same held-out rows. Use Brier score (MSE on binary labels), log loss with numerical clipping only for its computation, and calibration by predicted-probability bins. Inspect results by price bins and the binary covariate, with sample counts; avoid claiming reliable subgroup results from sparse bins. Classification accuracy alone is insufficient because later revenue calculations need probabilities. Report split sizes and uncertainty or variation where useful.
+5. **Inspect price-response support.** Plot predicted purchase probability over supported prices at representative covariates, alongside empirical purchase/offer rates and bin counts (Lecture 7 pp. 23–28). Flag increasing demand curves, sparse regions, or implausible extrapolation. Empirical binning is a diagnostic, not a guarantee. Do not impose a price range copied from a starter grid without investigating training support and assignment constraints. Reserve revenue-based validation through the supplied helper for Step 2; do not select a Step 1 model using hidden valuations.
+6. **Freeze and verify the interface.** Save fitted preprocessing and model together under `agents/helper_files_here/`, using approved dependencies and portable paths. For classifiers, obtain `predict_proba` for the class whose label is 1 (look it up in `classes_`); calling `predict` yields binary labels. Plan a small shared probability adapter or a coordinated caller update so existing Part 1/Part 2 consumers use the correct contract. This request authorizes planning only: do not edit the agent algorithms yet. Record model type, feature schema, split seed, training-data fingerprint, and dependency versions in a small reproducibility manifest.
+7. **Acceptance checks when implementation is authorized.** Re-run training from the repository setup; confirm finite predictions in [0, 1], correct row counts and feature ordering, and consistency for batch versus individual rows. Reload the serialized artifact in a fresh process and compare probabilities within tolerance. Verify all preprocessing is present and no machine paths or hidden valuation sources are needed. Check inference speed on one CPU under pinned dependencies before later agent integration; the assignment limit applies to complete online decisions, not merely the model call.
+
+## Proposed deliverables after this planning stage
+
+- A readable training notebook or script in `model_training/`, with preprocessing and feature construction visible.
+- A concise development evaluation record containing actual split definitions, model settings, probability metrics, and diagnostic findings; no fabricated scores and no report prose.
+- The selected serialized model and reproducibility manifest in `agents/helper_files_here/`, with a documented probability-inference contract for later consumers.
+
+Prefer the simplest model whose probability validation and diagnostics support it. The class-grounded starting recommendation is logistic regression after reproducing the supplied linear baseline; a more complex model is optional and needs evidence. No algorithm was implemented or trained in preparing this plan.
