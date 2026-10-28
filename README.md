@@ -53,6 +53,7 @@ Code and documentation use paths relative to the repository. Run notebook setup 
 
 ### Part 1 Step 1 development files
 
+- [Step 1 development summary](docs/part1-step1-summary.md)
 - [Data observations](docs/data-inspection.md)
 - [Implementation plan](docs/part1-step1-plan.md)
 - [Baseline experiment](model_training/baseline-experiment.md) and [structured results](model_training/baseline-results.json)
