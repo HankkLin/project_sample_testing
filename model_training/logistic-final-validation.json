@@ -1,0 +1,47 @@
+{
+  "validated_utc": "2026-10-28T04:51:55.318571+00:00",
+  "status": "passed",
+  "method": "Fresh process; no fitting or tuning",
+  "working_directory_outside_project": true,
+  "checks": [
+    "all direct dependency pins",
+    "data/model/notebook hashes",
+    "exact heldout IDs and labels",
+    "train-only scaler count/means/variances",
+    "four-feature schema",
+    "positive-class extraction",
+    "finite bounded probabilities",
+    "independent reload equality",
+    "single/batch consistency",
+    "saved predictions",
+    "Brier/logloss/accuracy recomputation",
+    "all calibration bins and ECE",
+    "baseline preserved",
+    "portable paths"
+  ],
+  "train_rows": 40000,
+  "heldout_rows": 10000,
+  "metrics": {
+    "clipped_linear": {
+      "brier_mse": 0.17095434766778153,
+      "log_loss": 0.531820228556283,
+      "ece_10_equal_width_bins": 0.11860811267160698,
+      "accuracy_at_0_5": 0.7573,
+      "correct_at_0_5": 7573
+    },
+    "logistic_main_effects": {
+      "brier_mse": 0.08999814363564312,
+      "log_loss": 0.37616485566335417,
+      "ece_10_equal_width_bins": 0.08564036335609597,
+      "accuracy_at_0_5": 0.8931,
+      "correct_at_0_5": 8931
+    }
+  },
+  "reload_max_abs_difference": 0.0,
+  "model_sha256": "98e2b1258fe91986bf3f56835f6a124a4bbfd5af9fcb3160aa5241f418f5f673",
+  "dataset_sha256": "d85efca8dba15fe5cf0fa3f0514d51ec42d7e6eaa97507990789a7e25c950a69",
+  "training_warning": [
+    "scipy.optimize: The `disp` and `iprint` options of the L-BFGS-B solver are deprecated and will be removed in SciPy 1.18.0."
+  ],
+  "interface": "predict_proba(features)[:, index of class 1]; existing pricing agents unchanged"
+}
